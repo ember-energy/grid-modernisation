@@ -1,0 +1,195 @@
+/* the clean, straight-edged CleanFlex finish */
+:root { --sky-top: #FDFEFF; --sky-mid: #E2EDF7; --sky-bot: #CCDEEE; }
+/* no paper grain anywhere */
+.era__stage::after, .gap__stage::after, .hero::after, .grid-story__stage::after { display: none !important; }
+/* the ink outline is a fine solid black line, as in the infographic */
+svg [stroke-opacity="0.55"] { stroke-opacity: .9; }
+/* pale sky behind the hero and section intros */
+.hero, .part-intro { background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 72%, var(--sky-bot) 100%); }
+.hero__art { top: 0; height: 100%; }
+/* isometric scenes: subtle motion (from CleanFlex) always runs */
+.iso .glint { opacity: 0; animation: glint 5.5s ease-in-out infinite; }
+@keyframes glint { 0% { transform: translate(0, 0); opacity: 0; } 6% { opacity: 1; } 34% { opacity: 1; } 40%, 100% { transform: translate(var(--tx), var(--ty)); opacity: 0; } }
+.iso .beacon { animation: beacon 2.4s steps(1) infinite; opacity: .25; }
+@keyframes beacon { 0% { opacity: 1; } 18% { opacity: .25; } }
+.iso .glow { opacity: 0; animation: glow 6s ease-in-out infinite; }
+@keyframes glow { 0%, 100% { opacity: 0; } 45%, 60% { opacity: .75; } }
+.iso .blink { opacity: 0; animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: 1; } }
+.iso .puff { transform-box: fill-box; transform-origin: 50% 50%; animation: isopuff 3.2s linear infinite; }
+@keyframes isopuff { 0% { transform: translate(0,0) scale(.3); opacity: 0; } 15% { opacity: .9; } 100% { transform: translate(18px,-70px) scale(2.4); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .iso .anim, .iso .puff { animation: none !important; } }
+
+/* hero title block, a size smaller so the town beside it has room */
+.hero h1 { font-size: clamp(30px, 3.85vw, 55px); }
+.hero .standfirst { font-size: clamp(16px, 1.3vw, 18.5px); }
+.hero .eyebrow { font-size: 13px; }
+.hero__cue { margin-top: calc(var(--u) * 5); font-size: 13px; }
+
+/* K and L in the isometric style (js/iso-grid.js) */
+.part-intro--how { position: relative; }
+.kgrid { position: absolute; top: calc(var(--topbar) + 8px); right: 2vw; width: min(50vw, 820px); height: min(48vh, 430px); pointer-events: none; }
+.ladder.is-cycling .ladder__rung { filter: grayscale(.9) brightness(1.03) contrast(.85); transition: filter .4s, box-shadow .4s, outline-color .4s; outline: 2px solid transparent; outline-offset: -2px; }
+.ladder.is-cycling .ladder__rung.is-on { filter: none; box-shadow: 0 12px 30px rgba(25, 34, 56, .14); }
+.ladder__rung { cursor: default; position: relative; z-index: 1; }
+.grid-story__stage { background: linear-gradient(180deg, #F3F7FB 0%, #E3ECF5 100%); }
+@media (max-width: 900px) { .kgrid { position: relative; top: 0; right: 0; width: 100%; height: 46vh; margin-top: 16px; } }
+/* the isometric signs on the cards of K and L are taller than they are wide: give them the height */
+.sign--iso { width: 100%; height: 100%; display: block; }
+.ladder__sign:has(.sign--iso) { width: 84px; height: 116px; }
+.gcard__sign:has(.sign--iso) { height: 88px; }
+.gcard--cat .gcard__sign:has(.sign--iso) { height: 112px; }
+/* L: one card per category that stays in view while its technologies scroll past, as an accordion (js/main.js) */
+.gblock { position: relative; padding: calc(var(--topbar) + 16px) 0 calc(100vh - var(--topbar) - 16px); }   /* the card sits where it will stick from the first moment, and leaves before the section ends */
+.gblock__hold { position: sticky; top: calc(var(--topbar) + 16px); height: 0; z-index: 3; padding-left: clamp(16px, 3vw, 40px); }
+.gbeat { min-height: 0; height: 72vh; padding: 0; display: block; }
+.gbeat--intro { height: 90vh; }
+.gacc { width: min(440px, 31vw); max-height: calc(100vh - var(--topbar) - 40px); overflow-y: auto; scrollbar-width: thin; padding: 20px 22px 8px; }
+.gacc .gcard__top { margin-bottom: 8px; }
+.gacc .gcard__sign:has(.sign--iso) { flex-basis: 52px; height: 80px; }
+.gacc h3 { font-size: clamp(26px, 2.2vw, 32px); color: var(--n5); line-height: 1.1; }
+.gacc .gcard__cat { margin-top: 4px; text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--n4); }
+.gacc__lead { font-size: 15px; color: var(--n4); margin-bottom: 10px; }
+.gacc.has-open .gacc__lead { display: none; }
+.gacc__list { border-top: 1px solid var(--n1); }
+.gacc__item { border-bottom: 1px solid var(--n1); }
+.gacc__head { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 0; background: none; border: 0; text-align: left; font: 500 14.5px/1.3 var(--font); color: var(--n5); cursor: pointer; }
+.gacc__head:hover .gacc__title { text-decoration: underline; text-underline-offset: 3px; }
+.gacc__sign { flex: 0 0 20px; height: 30px; }
+.gacc__title { flex: 1; transition: color .3s; }
+.gacc__chev { flex: 0 0 8px; height: 8px; border-right: 2px solid var(--n3); border-bottom: 2px solid var(--n3); transform: rotate(45deg) translate(-2px, -2px); transition: transform .35s; margin-right: 4px; }
+.gacc__item.is-open .gacc__chev { transform: rotate(-135deg) translate(-2px, -2px); border-color: var(--n5); }
+.gacc__item.is-open .gacc__head { color: var(--n5); font-weight: 600; }
+.gacc__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease; }
+.gacc__item.is-open .gacc__body { grid-template-rows: 1fr; }
+.gacc__inner { overflow: hidden; padding-left: 30px; }
+.gacc__text { font-size: 14.5px; color: var(--n4); margin: 2px 0 14px; }
+.gacc__text strong { color: var(--n5); font-weight: 600; }
+.gacc__tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 6px; }
+.gtag { font-size: 11px; font-weight: 500; padding: 2px 8px; border: 1px solid var(--n2); color: var(--n4); }
+.gtag--est { border-style: dashed; }
+.gacc__tech { font-size: 12px; color: var(--n3); margin: 0 0 12px; }
+@media (max-width: 900px) {
+  .gblock__hold { top: calc(var(--topbar) + 52vh + 36px); padding: 0 16px; }
+  .gacc { width: calc(100vw - 32px); max-height: calc(48vh - 60px); padding: 14px 16px 4px; }
+  .gacc .gcard__sign:has(.sign--iso) { flex-basis: 44px; height: 60px; }
+}
+/* L: one card for the section; the three categories as an accordion, each category's technologies as tabs marked by
+   their signs (js/main.js) */
+.gtabcard { width: min(440px, 31vw); max-height: calc(100vh - var(--topbar) - 40px); overflow-y: auto; scrollbar-width: thin; padding: 4px 22px; }
+.gcat { border-bottom: 1px solid var(--n1); }
+.gcat:last-child { border-bottom: 0; }
+.gcat__head { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 0; background: none; border: 0; text-align: left; cursor: pointer; font-family: var(--font); }
+.gcat__sign { flex: 0 0 34px; height: 34px; }
+.gcat__name { flex: 1; display: flex; flex-direction: column; }
+.gcat__title { font-size: 22px; font-weight: 600; color: var(--n5); line-height: 1.15; }
+.gcat__tag { font-size: 13px; color: var(--n4); margin-top: 2px; }
+.gcat__count { font-size: 12px; color: var(--n3); }
+.gcat:not(.is-open) .gcat__sign { opacity: .55; filter: grayscale(.6); }
+.gcat.is-open .gacc__chev { transform: rotate(-135deg) translate(-2px, -2px); border-color: var(--n5); }
+.gcat__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease; }
+.gcat.is-open .gcat__body { grid-template-rows: 1fr; }
+.gcat__inner { overflow: hidden; }
+.gtabs { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 46px)); gap: 0; border-bottom: 1px solid var(--n1); margin-bottom: 14px; }
+.gtab { width: 100%; height: 46px; padding: 4px 3px 8px; background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; cursor: pointer; opacity: .42; filter: grayscale(.7); transition: opacity .25s, filter .25s, border-color .25s; }
+.gtab:hover, .gtab:focus-visible { opacity: .9; filter: none; }
+.gtab.is-on { opacity: 1; filter: none; border-bottom-color: var(--n5); }
+.gtab__sign { display: block; width: 100%; height: 100%; pointer-events: none; }
+.gcat__lead { font-size: 14.5px; color: var(--n4); margin: 0 0 16px; }
+.gcat.has-item .gcat__lead { display: none; }
+.gpanel { display: none; padding-bottom: 16px; }
+.gpanel.is-on { display: block; animation: gpanel-in .35s ease; }
+@keyframes gpanel-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.gpanel__num { font-size: 12px; color: var(--n3); margin: 0 0 2px; }
+.gpanel__title { font-size: 19px; font-weight: 600; color: var(--n5); margin: 0 0 6px; line-height: 1.25; }
+@media (max-width: 900px) {
+  .gtabcard { width: calc(100vw - 32px); max-height: calc(48vh - 60px); padding: 2px 16px; }
+  .gcat__head { padding: 10px 0; }
+  .gcat__title { font-size: 18px; }
+  .gtab { height: 40px; }
+}
+@media (max-width: 900px) { .gblock { padding-top: calc(var(--topbar) + 52vh + 36px); padding-bottom: 50vh; } }
+.gridmap { left: 0; width: 100%; }   /* the city runs on under the sidebar card (the camera keeps what is in focus to its right) */
+/* K and L share one pinned picture (index.html .kl): K's text, then L's cards, scroll over the city */
+.kl { position: relative; }
+.kl__stage { position: sticky; top: 0; height: 100vh; z-index: 0; }
+.kl__k { position: relative; z-index: 2; margin-top: -100vh; min-height: 100vh; background: transparent !important; pointer-events: none; }
+.kl__k > * { max-width: 560px; }
+.kl__k .ladder__foot { margin-top: calc(var(--u) * 4); }
+.kl .grid-story { position: relative; z-index: 2; background: transparent; }
+.kl .grid-story__steps { margin-top: 0; }
+.kl__stage .legend, .kl__stage .tally { transition: opacity .5s; }
+.kl__stage.is-k .legend, .kl__stage.is-k .tally { opacity: 0; }
+.kl__stage::after { display: none !important; }
+/* L: three cards, one per category; each stays in view while its technologies scroll past */
+.gblock { padding: 0 0 62vh; }
+.gblock--first { padding-top: calc(var(--topbar) + 16px); }
+.gblock--last { padding-bottom: calc(100vh - var(--topbar) - 16px); }
+.gcatcard { padding: 20px 22px 6px; }
+.gcatcard .gcat__title { display: block; font-size: 28px; }
+.gcatcard .gcat__tag { display: block; margin: 2px 0 14px; }
+.gcatcard .gtabs { margin-top: 0; }
+.gcatcard.has-item .gcat__lead { display: none; }
+/* L, focus: what a step is not about becomes a pale grey silhouette where it stands (js/iso-grid.js, focus) */
+.ig-dim [fill]:not([fill="none"]):not([fill^="url"]) { fill: #E9ECF1 !important; }
+.ig-dim [stroke]:not([stroke="none"]) { stroke: #C3C9D4 !important; }
+.ig-ground.ig-dim [fill]:not([fill="none"]) { fill: #F1F3F6 !important; }
+.ig-ground.ig-dim [stroke]:not([stroke="none"]) { stroke: #DCE0E7 !important; }
+
+/* the modern grid (Act 3): the town from section L as its own pinned picture, cards on the left */
+.era--modern .era__stage { background: var(--paper); }
+.era--modern .gridmap { top: var(--topbar); bottom: 52px; height: calc(100% - var(--topbar) - 52px); }
+.era--modern .card { max-width: min(440px, 30vw); }
+@media (max-width: 900px) { .era--modern .card { max-width: none; } }
+.era--modern .breakcard .h1 { max-width: 15ch; }
+
+/* the nav: one link per act, the current one marked */
+.topbar__nav { gap: 22px; }
+.topbar__nav a { font-size: 13px; white-space: nowrap; padding: 4px 0; color: var(--n2); transition: color .2s; }
+.topbar__nav a:hover { color: var(--n4); }
+.topbar__nav a.is-on { color: #000; }
+
+/* index2/index3: a card held over several steps (data-span), its terms lighting up one per step (js/main.js) */
+.era .step--hold { display: block; height: calc(var(--span, 1) * 100vh); padding-top: calc(50vh - 70px); }
+.era .step--hold .card { position: sticky; top: calc(50vh - 70px); }
+.hl { font-weight: inherit; color: var(--n2, #9AA3B5); transition: color .25s ease; }
+.hl.is-past { color: inherit; }
+.hl.is-on { color: #000; font-weight: 600; }
+@media (max-width: 700px) {
+  .era .step--hold { padding-top: calc(var(--topbar) + 16px); }
+  .era .step--hold .card { top: calc(var(--topbar) + 16px); }
+}
+
+/* index2: the act titles ride in a card over the scene (no separate white act-intro section) */
+.card--act { max-width: 520px; }
+.card--act .eyebrow { margin-bottom: 8px; }
+.h2-act { font-size: clamp(30px, 3.2vw, 46px); font-weight: 600; line-height: 1.12; letter-spacing: -.01em; }
+.card--act .tbar { margin-top: 18px; }
+
+/* index4: Modernising the grid on the one city (js/story4.js): a text box per category with an icon bar */
+.era--story4 .era__stage { background: linear-gradient(180deg, #F3F7FB 0%, #E3ECF5 100%); }
+.s4block { padding: 0 0 62vh; }
+.s4block:first-child { padding-top: 10vh; }
+.s4card { width: min(460px, 32vw); padding: 18px 22px 8px; }
+.s4card[data-cat="optimise"] { --catc: #0B6638; }
+.s4card[data-cat="reinforce"] { --catc: #203772; }
+.s4card[data-cat="expand"] { --catc: #BF3100; }
+.s4card__cat { font-size: 26px; font-weight: 600; color: var(--catc); margin: 0 0 10px; }
+.s4tabs { display: flex; flex-wrap: wrap; gap: 2px; border-bottom: 1px solid var(--n1); margin-bottom: 14px; }
+.s4tab { position: relative; width: 44px; height: 44px; padding: 8px 6px 10px; background: none; border: 0; border-bottom: 3px solid transparent; margin-bottom: -1px; cursor: pointer; color: var(--n3); transition: color .25s, border-color .25s; }
+.s4tab svg { width: 100%; height: 100%; fill: currentColor; display: block; }
+.s4tab:hover, .s4tab:focus-visible { color: var(--n5); }
+.s4tab.is-on { color: var(--catc); border-bottom-color: var(--catc); }
+.s4panel { display: none; padding-bottom: 14px; }
+.s4panel.is-on { display: block; animation: gpanel-in .35s ease; }
+.s4panel__num { font-size: 13px; font-weight: 600; color: var(--catc); margin: 0 0 2px; }
+.s4panel__title { font-size: 21px; font-weight: 600; color: var(--n5); margin: 0 0 8px; line-height: 1.25; }
+.s4panel__body p, .s4panel__body li { font-size: 15px; color: var(--n4); line-height: 1.5; }
+.s4panel__body p + p { margin-top: 8px; }
+.s4panel__body ul { margin: 8px 0 0; padding-left: 18px; }
+.s4panel__body li + li { margin-top: 6px; }
+.matrix4 .mx-tile span b { color: var(--n5); margin-right: 2px; }
+@media (max-width: 900px) { .s4card { width: calc(100vw - 32px); max-height: calc(48vh - 60px); overflow-y: auto; } }
+
+/* index4: only the section letters of the review markers */
+.refs-sections-only .refmark--step, .refs-sections-only .refmark--float { display: none !important; }

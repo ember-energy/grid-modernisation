@@ -1,0 +1,139 @@
+/* index.html: the revision after the version 4 feedback. Loaded after clean.css. */
+
+/* B3: the five eras in one sentence. The words keep one colour and weight; the one on screen gets a soft green marker. */
+.v6 .hl, .v6 .hl.is-past { color: inherit; font-weight: inherit; }
+.v6 .hl { transition: box-shadow .3s ease; }
+.v6 .hl.is-on { color: inherit; font-weight: inherit; box-shadow: inset 0 -0.42em 0 rgba(19, 206, 116, .32); }
+
+/* the renewable and fossil key: only while the flows are the story (js/v6.js) */
+.v6 .legend--onecity { opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+.v6 .legend--onecity.is-on { opacity: 1; }
+
+/* no item numbers above the headers; the steps come sooner and closer together */
+.v6 .s4panel__num { display: none; }
+.v6 .s4intro { height: 80vh; }
+.v6 .s4block { padding-bottom: 60vh; }
+.v6 .s4block:first-child { padding-top: 0; }
+.v6 .s4block .gbeat { height: 62vh; }
+.v6 .matrix__legend .mk--optimize { background: #109553; } .v6 .matrix__legend .mk--reinforce { background: #37A6E6; } .v6 .matrix__legend .mk--expand { background: #FFC400; }
+
+/* D: the matrix takes the full width; the note sits small under it; no cell hides its tiles */
+.v6 .matrix__stage { padding-left: clamp(16px, 5vw, 80px); padding-right: clamp(16px, 5vw, 80px); grid-template-rows: auto auto auto auto; align-content: start; }
+.v6 .matrix__grid { grid-template-rows: 28px repeat(3, minmax(0, auto)); align-content: start; }
+.v6 .mx-cell { overflow: visible; min-height: 92px; }
+.v6 .mx-tile { flex: 0 1 calc(33.33% - 4px); font-size: 12px; }
+.v6 .mx-note { font-size: 12px; line-height: 1.45; color: var(--n3); max-width: 860px; margin: 8px 0 0; }
+.v6 .matrix .step--empty { height: 100vh; }
+@media (max-width: 900px) { .v6 .mx-tile { flex-basis: calc(50% - 3px); } }
+
+/* the key sits on its own white panel (it no longer collides with the drawing) and shows the pulses as they look: short dashes */
+.v6 .legend--onecity { background: rgba(255, 255, 255, .92); padding: 7px 12px; border: 1px solid var(--n1); align-items: center; }
+.v6 .legend--onecity i { width: 9px; height: 9px; border-radius: 50%; vertical-align: 0; }
+
+/* phones: the story card sits in the top third, the city fills the rest of the screen below it; the key sits at the bottom */
+@media (max-width: 699px) {
+  .v6 .era--onecity:not(.era--story4) .step { align-items: flex-start; padding-top: calc(var(--topbar) + 14px); }
+  .v6 .era--onecity .legend--onecity { top: auto; bottom: 10px; left: auto; right: 12px; }
+}
+
+/* every story text box: the same width and the same distance from the left edge, in every section */
+@media (min-width: 900px) {
+  .v6 .era .era__steps .card, .v6 .era .era__steps .card--act { width: 460px; max-width: 460px; box-sizing: border-box; }
+  .v6 .era--story4 .gblock__hold { padding-left: clamp(16px, 5vw, 80px); }
+  .v6 .era--story4 .s4card { width: 460px; max-width: 460px; box-sizing: border-box; }
+}
+
+/* C: the item's own plate above its title */
+.v6 .s4panel__plate { width: 66px; height: 66px; margin: 2px 0 10px; }
+.v6 .s4panel__plate svg, .v6 .mx-tile .plate6 { width: 100%; height: 100%; display: block; overflow: visible; }
+.v6 .s4tab svg { stroke: currentColor; }
+/* D: bigger tiles: the plate on its own line, the name under it */
+.v6 .matrix__grid { grid-template-columns: 90px 2fr 4fr 2fr; }   /* every tile the same width: low and high hold two a row, medium four */
+.v6 .mx-cell { gap: 8px; padding: 8px; }
+.v6 .mx-tile { flex: 0 1 calc(50% - 4px); flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 10px 8px 12px; font-size: 14px; line-height: 1.3; border: 1px solid var(--n2); }
+.v6 .mx-cell:nth-child(4n + 3) .mx-tile, .v6 .mx-cell:nth-child(4n+3) .mx-tile { flex-basis: calc(25% - 6px); }
+.v6 .mx-tile .sign-wrap { flex: 0 0 auto; width: 72px; height: 72px; }
+.v6 .mx-tile span { font-weight: 500; color: var(--n5); }
+@media (max-width: 900px) { .v6 .matrix__grid { grid-template-columns: 44px repeat(3, 1fr); } .v6 .mx-tile { flex-basis: 100%; padding: 6px 2px; } .v6 .mx-tile .sign-wrap { width: 40px; height: 40px; } .v6 .mx-tile span { display: none; } }
+.v6 .matrix__head .h1 { margin-bottom: 0; } .v6 .matrix__head .tbar { margin: 8px 0 10px; } .v6 .matrix__stage { padding-top: calc(var(--topbar) + 14px); }
+/* the table is taller now: it scrolls as a normal block instead of being pinned to one screen */
+.v6 .matrix__stage { position: relative; height: auto; overflow: visible; padding-bottom: 60px; }
+.v6 .matrix .era__steps { display: none; }
+.v6 .matrix__grid { grid-template-rows: 28px repeat(3, auto); }
+
+/* text boxes: white, no grey border (brand); section titles: the bar above the title, a little smaller; no orphans */
+.v6 .card, .v6 .gcard, .v6 .headline, .v6 .eralabel, .v6 .hero__cue, .v6 .legend--onecity { border: 0; }
+.v6 .tbar { width: 96px; height: 5px; margin: 0 0 14px; }
+.v6 .card--act .tbar { margin: 0 0 14px; }
+.v6 .matrix__head .tbar { margin: 0 0 10px; }
+.v6 p, .v6 li, .v6 .lead { text-wrap: pretty; }
+.v6 h1, .v6 h2, .v6 h3, .v6 .s4panel__title { text-wrap: balance; }
+.v6 .hero h1, .v6 .close .h1 { margin-bottom: 24px; }
+.v6 .tbar, .v6 .card--act .tbar { width: 80px; height: 4px; margin: 0 0 22px; }
+.v6 .matrix__head .tbar { margin: 0 0 16px; }
+
+/* B to C on one city: C's pinned stage overlaps the last screen of B and only shows once it is at the top (js/v6.js) */
+.v6 .era--story4 { margin-top: -100vh; }
+.v6 .era--story4 .era__stage { opacity: 0; pointer-events: none; }
+.v6 .era--story4.is-live .era__stage { opacity: 1; pointer-events: auto; }
+.v6 #how4 { padding-top: 100vh; }                       /* C's first card comes after B's last one has gone */
+.v6 .era--story4 .s4intro { height: 100vh; }
+.v6 .s4block:first-child { padding-top: 70vh; }          /* room between "Modernising the grid" and the Optimise box */
+
+/* A: the cue is plain text with a pulsing chevron; no solar glint in the drawings */
+.v6 .hero__cue { background: none; border: 0; padding: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: var(--n4); }
+.v6 .hero__chev { width: 14px; height: 9px; animation: chev 1.6s ease-in-out infinite; }
+@keyframes chev { 0%, 100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(5px); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .v6 .hero__chev { animation: none; } }
+.v6 .glint { display: none; }
+
+/* category colours in the interventions cards: the shield colours (Expand's yellow is too light for text, so its name and
+   navbar use a deeper gold of the same hue) */
+.v6 .s4card[data-cat="optimise"] { --catc: #109553; }
+.v6 .s4card[data-cat="reinforce"] { --catc: #2A8FCB; }
+.v6 .s4card[data-cat="expand"] { --catc: #B38900; }
+/* D: every tile the same height, no border */
+.v6 .mx-tile { border: 0; height: 150px; box-sizing: border-box; justify-content: flex-start; padding-top: 14px; }
+.v6 .mx-cell { align-content: flex-start; }
+@media (max-width: 900px) { .v6 .mx-tile { height: 64px; padding-top: 10px; } }
+/* D: even padding inside every card; headers as filled header cells */
+.v6 .mx-tile { height: 172px; padding: 18px 12px; justify-content: center; gap: 10px; }
+.v6 .matrix__grid { grid-template-rows: auto repeat(3, auto); }
+.v6 .mx-axis { align-self: stretch; display: flex; align-items: center; background: #D8DEEA; color: var(--n5); font-size: 14px; font-weight: 600; padding: 10px 14px; }
+.v6 .mx-axis--col { justify-content: flex-start; }
+.v6 .matrix__grid > div:first-child { background: none; }
+@media (max-width: 900px) { .v6 .mx-tile { height: 70px; padding: 10px 4px; } .v6 .mx-axis { font-size: 11px; padding: 6px; } }
+.v6 .mx-tile { justify-content: flex-start; }   /* shields on one line across a row; the tile is tall enough for three lines of name with the same padding */
+/* D: room under the title; the key above the table */
+.v6 .matrix__head { margin-bottom: 26px; }
+.v6 .mx-key { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 6px 0 30px; max-width: 1100px; }
+.v6 .mx-key__item { display: flex; align-items: flex-start; gap: 14px; }
+.v6 .mx-key__item .plate6 { flex: 0 0 52px; width: 52px; height: 52px; overflow: visible; }
+.v6 .mx-key__name { font-size: 17px; font-weight: 600; margin: 2px 0 2px; }
+.v6 .mx-key__item[data-cat="optimise"] .mx-key__name { color: #109553; }
+.v6 .mx-key__item[data-cat="reinforce"] .mx-key__name { color: #2A8FCB; }
+.v6 .mx-key__item[data-cat="expand"] .mx-key__name { color: #B38900; }
+.v6 .mx-key__blurb { font-size: 14px; line-height: 1.4; color: var(--n4); margin: 0; }
+.v6 .mx-note { margin-top: 18px; }
+@media (max-width: 900px) { .v6 .mx-key { grid-template-columns: 1fr; gap: 10px; } }
+.v6 .matrix__head .eyebrow { margin-bottom: 6px; }
+.v6 .close { background: #192238; }
+.v6 .footer__note { max-width: 70ch; line-height: 1.6; }
+.v6 .close { min-height: 0; } .v6 .close__inner { padding: 14vh clamp(16px, 7vw, 120px) 8vh; }
+.v6 .footer__note { max-width: 110ch; }
+.v6 .close__inner { padding: 20vh clamp(16px, 7vw, 120px) 12vh; }
+.v6 .topbar__progress { height: 2px; } .v6 .topbar__progress span { background: #192238 !important; }
+/* the key as a strip on the table's own columns, filled like a lighter header */
+.v6 .mx-key { grid-template-columns: 90px 2fr 4fr 2fr; gap: 8px; max-width: none; margin: 0 0 8px; }
+.v6 .mx-key__item { background: #ECF0F6; padding: 10px 14px; align-items: center; gap: 12px; }
+.v6 .mx-key__item .plate6 { flex: 0 0 36px; width: 36px; height: 36px; }
+.v6 .mx-key__name { font-size: 15px; margin: 0; }
+.v6 .mx-key__blurb { font-size: 13px; line-height: 1.35; }
+@media (max-width: 900px) { .v6 .mx-key { grid-template-columns: 44px repeat(3, 1fr); gap: 4px; } .v6 .mx-key__blurb { display: none; } .v6 .mx-key__item { padding: 6px; gap: 6px; } .v6 .mx-key__item .plate6 { width: 22px; height: 22px; flex-basis: 22px; } .v6 .mx-key__name { font-size: 11px; } }
+.v6 .hero__cue { flex-direction: column; align-items: center; gap: 6px; }
+.v6 .card--act { padding-bottom: 40px; } .v6 .card--act .h2-act { margin-bottom: 0; }
+
+/* the key: its own band between two rules, a safe distance above the table, not on the table's columns */
+.v6 .mx-key { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 18px 48px; max-width: none; margin: 4px 0 56px; padding: 16px 0; border-top: 1px solid #192238; border-bottom: 1px solid #192238; }
+.v6 .mx-key__item { background: none; padding: 0; flex: 0 1 300px; align-items: center; gap: 12px; }
+@media (max-width: 900px) { .v6 .mx-key { gap: 10px 20px; margin-bottom: 36px; padding: 12px 0; } .v6 .mx-key__item { flex: 1 1 100%; } .v6 .mx-key__blurb { display: block; } .v6 .mx-key__name { font-size: 14px; } .v6 .mx-key__item .plate6 { width: 30px; height: 30px; flex-basis: 30px; } }

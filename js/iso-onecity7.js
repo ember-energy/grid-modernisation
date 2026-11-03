@@ -120,7 +120,8 @@
     const HL = true;   // index.html always uses the highlight look
     const tl = gsap.timeline({ paused: true });
     live(svg);
-    const skies = [["oc-sky1", [["0", "#FBF4E2"], ["0.7", "#EFE6CF"], ["1", "#E2DAC4"]]], ["oc-sky2", [["0", "#F2F8FD"], ["0.7", "#DCEBF7"], ["1", "#CFE2F2"]]]]
+    // index2: both skies are the same light blue (the first, era scenes were a warm cream)
+    const skies = [["oc-sky1", [["0", "#F2F8FD"], ["0.7", "#DCEBF7"], ["1", "#CFE2F2"]]], ["oc-sky2", [["0", "#F2F8FD"], ["0.7", "#DCEBF7"], ["1", "#CFE2F2"]]]]
       .map(([id, st], i) => { const r = sky(svg, id, st); if (i) r.setAttribute("opacity", 0);
         // a sky that reaches every edge of a tall (phone) or wide screen: the gradient keeps its place, its end colours run on
         const lg = svg.querySelector("#" + id); if (lg) { lg.setAttribute("gradientUnits", "userSpaceOnUse"); lg.setAttribute("y1", -400); lg.setAttribute("y2", 1300); lg.setAttribute("x2", 0); }
@@ -462,9 +463,13 @@
     const TRAFFIC = { t: 0 }, TRAFFIC_S = 26, trafficTw = gsap.to(TRAFFIC, { t: 1, duration: TRAFFIC_S, repeat: -1, ease: "none" });
     setInterval(() => { const ns = (lanesX || []).concat(S.set("carsY")); if (!ns.length) return;
       const live = ns.some((n) => !n.closest('[data-still="1"]')); if (live && trafficTw.paused()) trafficTw.play(); else if (!live && !trafficTw.paused()) trafficTw.pause(); }, 250);
+    // index2: a vehicle is fully visible only while all of it is on the land; it fades out over its last stretch before
+    // the edge (and in over its first), so nothing hangs over the edge of the city
+    const VLEN = { car: 1.4, bus: 2.8, truck: 2.2, tram: 3.25 }, FADE = 1.6;
+    const edgeOp = (d, kind) => Math.max(0, Math.min(1, d / FADE, (N - d - (VLEN[kind] || 1.4)) / FADE)).toFixed(2);
     const drive = (lane, y, list, dir) => list.forEach(([col, phase, kind]) => { const c = el("g", null, lane); vehicle(c, kind, 0, y, col, "x", dir < 0); const o = { p: 0 }, L = N + 5;
-      const tw = gsap.to(o, { p: 1, duration: TRAFFIC_S, repeat: -1, ease: "none", data: c, onUpdate: () => { const q = (phase + TRAFFIC.t) % 1, d = along(null, dir < 0 ? N + 2 - q * L : -3 + q * L);
-        c.setAttribute("transform", `translate(${d.x.toFixed(1)} ${d.y.toFixed(1)})`); c.setAttribute("opacity", Math.max(0, Math.min(1, q * 14, (1 - q) * 14)).toFixed(2)); } }); });
+      const tw = gsap.to(o, { p: 1, duration: TRAFFIC_S, repeat: -1, ease: "none", data: c, onUpdate: () => { const q = (phase + TRAFFIC.t) % 1, s0 = dir < 0 ? N + 2 - q * L : -3 + q * L, d = along(null, s0);
+        c.setAttribute("transform", `translate(${d.x.toFixed(1)} ${d.y.toFixed(1)})`); c.setAttribute("opacity", edgeOp(s0, kind)); } }); });
     S.lane(RY + 0.45, (g) => { train = convoy(g, N, VK.steamTrain(RY + 0.45, 3)); fast = el("g", { opacity: 0 }, g); K.train(fast, 0, RY + 0.42, 3, { stripe: GREEN }); });
     S.lane(RD[2][0] + 0.45, (g0) => { boatG = el("g", { opacity: 0 }, g0); boat = convoy(boatG, N, [[0, (g) => { const y = RD[2][0] + 0.45;
       F.box(g, -1.5, y, 0, 3.0, 0.55, 0.28, { left: "#2F5E4E", right: shade("#2F5E4E"), top: "#4E7F6C" }); const cab = F.box(g, -0.9, y + 0.07, 0.28, 1.8, 0.42, 0.34, { left: "#B5302E", right: shade("#B5302E"), top: "#E3D6C0" });
@@ -482,7 +487,7 @@
     GYL.forEach(([[a, c], list], ri) => list.forEach(([dir, col, phase, kind], vi) => { const id = `oc-vy-${UIDY}-${ri}-${vi}`, x = dir > 0 ? a + 0.12 : c - 0.74;
       const g = el("g", { id }, protoHome); vehicle(g, kind, x, 0, col, "y", dir < 0); protosY.push([ri, id]); const o = { p: 0 }, L = N + 5;
       const tw = gsap.to(o, { p: 1, duration: TRAFFIC_S, repeat: -1, ease: "none", data: g, onUpdate: () => { const q = (phase + TRAFFIC.t) % 1, d = dir > 0 ? -3 + q * L : N + 2 - q * L, u = P(0, d), z = P(0, 0);
-        g.setAttribute("transform", `translate(${(u[0] - z[0]).toFixed(1)} ${(u[1] - z[1]).toFixed(1)})`); g.setAttribute("opacity", Math.max(0, Math.min(1, q * 14, (1 - q) * 14)).toFixed(2)); } }); }));
+        g.setAttribute("transform", `translate(${(u[0] - z[0]).toFixed(1)} ${(u[1] - z[1]).toFixed(1)})`); g.setAttribute("opacity", edgeOp(d, kind)); } }); }));
     // used only by the interventions story (index4, js/story4.js): an HVDC converter station on the quay and its subsea
     // interconnector cable out across the sea to a neighbouring country beyond the tile's edge
     S.add(38.7, 21.3, (g) => { const h = bx(g, 37.0, 20.5, 0, 3.4, 1.5, 1.5, "#DCE3EA", "#EEF1F5"); for (let u = 0.4; u < 3.2; u += 0.7) F.face(g, F.L, h, u, 0.35, u + 0.4, 1.1, "#9FB2C6", { "stroke-width": 0.5 });

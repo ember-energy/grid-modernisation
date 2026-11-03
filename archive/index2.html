@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building a Grid for the Age of Power (option 1) | Ember</title>
+<meta name="description" content="Every era is defined by the infrastructure it builds. A visual explainer on the grid we need for the age of power, and the interventions that will build it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/clean.css">
+<script>window.CLEAN = true;   /* the isometric, straight-edged version in the CleanFlex style */</script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="topbar__logo" href="#top" aria-label="Ember home"><img src="../assets/ember-logo-full-colour.svg" alt="Ember"></a>
+  <nav class="topbar__nav" aria-label="Chapters">
+    <a href="#vision">Daring to build</a>
+    <a href="#act2">The world moved on</a>
+    <a href="#act3">A new type of grid</a>
+    <a href="#how">Modernising the grid</a>
+  </nav>
+  <div class="topbar__progress" aria-hidden="true"><span></span></div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <svg class="hero__art" id="scene-hero" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+    <div class="hero__inner">
+      <p class="eyebrow">A visual explainer</p>
+      <h1>Building a grid<br>for the age of power</h1>
+      <div class="tbar"></div>
+      <p class="standfirst">Warm homes, clean air, thriving towns and industry. The future we want runs on one network: a modern electricity grid.</p>
+      <p class="hero__cue">Scroll to begin <span aria-hidden="true">↓</span></p>
+    </div>
+  </section>
+
+  <!-- Acts 1 and 2 (including the electrostate cards, formerly section GA) on one valley that evolves through the ages to a modern grid, then shows the grid standing still (js/iso-journey.js, data-variant="v2all") -->
+  <section class="era era--rail era--journey" data-steps="15" data-cover-shift="0">
+    <div class="era__stage"><svg class="scene" id="scene-journey" data-scene="valley" data-remap="0:0 1:0 18.1:17.1" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Animated illustration of one valley by the sea through the ages: a canal is cut and a narrowboat comes along it; a railway is laid, a train arrives and mills, terraces and a brick city rise; telephone poles and masts go up; a highway paves over the canal and roadside businesses open; wireless signals rise from the buildings and modern towers go up; a town square fills with life and a fast electric train passes; then wind turbines, pylons, a substation and rooftop solar arrive, and power flows along the new line; then a fast train passes, everything fades back except the grid, its pylons, conductors and substation unchanged, and data centres rise behind the towers drawing on the same grid; then colour returns and the valley becomes an electrostate: a charging hub, chargers and heat pumps, the chimneys come down, the fuel tanker sails out of the harbour and its tanks come down as solar and offshore wind arrive, data centres and a new factory rise"></svg></div>
+    <div class="era__steps">
+      <div class="step step--act" id="vision"><div class="card card--act"><p class="eyebrow">Act 1</p><h2 class="h2-act">Daring to build</h2><div class="tbar"></div></div></div>
+      <div class="step"><div class="card"><p class="lead">Every age is remembered by what it built, with new infrastructure transforming the way the world works.</p></div></div>
+      <div class="step step--hold" data-span="5" style="--span:5"><div class="card"><p class="lead">Past eras have been defined by <span class="hl">canals</span>, <span class="hl">railways</span>, <span class="hl">telephone lines</span>, <span class="hl">highways</span> and <span class="hl">internet cables</span>.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">Each made possible ways of living and kinds of growth that no one could have imagined before.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">The next age will run on electricity, and it is arriving fast.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">Its success depends on whether we build the infrastructure it runs on. <strong>That choice is being made now.</strong></p></div></div>
+      <div class="step step--act" id="act2"><div class="card card--act"><p class="eyebrow">Act 2</p><h2 class="h2-act">The world moved on, the grid did not</h2><div class="tbar"></div></div></div>
+      <div class="step"><div class="card"><p class="lead">How we work, travel and communicate has changed beyond recognition in the last fifty years.</p></div></div>
+      <div class="step"><div class="card"><p class="lead lead--strong">But the grid has stayed fundamentally the same.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">Grids are out of step with a world that moves faster and is hungrier for power than any before.</p></div></div>
+      <div class="step"><div class="card"><p class="kicker">Electrostates</p><p class="lead">Across the world, countries are transforming themselves into <strong>electrostates</strong>: economies that run on electricity from the ground up.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">In these countries, cars, trains, kitchens, heating and factories are switching from fossil fuels to clean electricity.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">Domestic wind and solar are replacing fossil fuel imports.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">Data centres are expanding, drawing power around the clock.</p></div></div>
+      <div class="step step--label"><div class="eralabel eralabel--wide">The nations that build a grid for this age of power will be where AI, industry and investment go.</div></div>
+    </div>
+  </section>
+
+  <!-- ============ THE MODERN GRID: the L city, from the old one-way grid to the modern grid ============ -->
+  <section id="modern" class="era era--modern" data-steps="15">
+    <div class="era__stage">
+      <svg class="gridmap gridmap--modern" id="scene-modern" viewBox="20 40 1540 960" preserveAspectRatio="xMidYMid meet" role="img" aria-label="A town in isometric view, its electricity carried in glass pipes. First a single gas plant sends power one way to everyone; then wind, solar, rooftops, farms and businesses generate their own, power flows both ways, cars charge and batteries store and release power, sensors and controls appear on the pipes, upgraded lines carry more, and new supply and demand plug in"></svg>
+      <div class="legend legend--modern" aria-label="Map legend">
+        <span><i style="background:#4A546A"></i>Fossil power</span>
+        <span><i style="background:#13CE74"></i>Clean electricity</span>
+        <span><i style="background:#FFC400"></i>From storage</span>
+        <span><i style="background:#37A6E6"></i>High-capacity flow</span>
+        <span><i style="background:#EE7309"></i>Flexible flow (both directions)</span>
+      </div>
+    </div>
+    <div class="era__steps">
+      <div class="step step--act" id="act3"><div class="card card--act"><p class="eyebrow">Act 3</p><h2 class="h2-act">A new type of grid, fit for the age of power</h2><div class="tbar"></div></div></div>
+      <div class="step" data-m="old"><div class="card"><p class="lead">The old grid sent power one way, from a few large power stations to everyone else.</p></div></div>
+      <div class="step" data-m="everywhere"><div class="card"><p class="lead">In a modern grid, generation is increasingly spread across the country</p></div></div>
+      <div class="step" data-m="both"><div class="card"><p class="lead">and power flows now moves in two ways. Homes and businesses draw electricity from the grid and send it back in.</p></div></div>
+      <div class="step" data-m="resilient"><div class="card"><p class="lead">The system no longer depends on a few big plants and becomes more resilient.</p></div></div>
+      <div class="step" data-m="sensors"><div class="card"><p class="lead">This is enabled by smart devices and digitalisation, which allow us to see and control what is happening on the grid.</p></div></div>
+      <div class="step" data-m="smart2"><div class="card"><p class="lead">When power is plentiful and cheap, electric vehicles charge and heating or cooling turns on.</p></div></div>
+      <div class="step" data-m="batteries2"><div class="card"><p class="lead">Batteries store surplus electricity and release it when generation falls.</p></div></div>
+      <div class="step" data-m="better"><div class="card"><p class="lead">Bills fall, the system runs better and we can do more, faster with the existing grid.</p></div></div>
+      <div class="step" data-m="dlr"><div class="card"><p class="lead">The wires are smarter too. Lines fitted with sensors carry more power when the weather allows,</p></div></div>
+      <div class="step" data-m="wires"><div class="card"><p class="lead">and advanced cables made from new, lighter materials carry much more on the same towers.</p></div></div>
+      <div class="step" data-m="more"><div class="card"><p class="lead">This is the modern grid: digital, flexible and smarter about how it grows. It gets more out of the lines we already have.</p></div></div>
+      <div class="step" data-m="connect"><div class="card"><p class="lead">New lines are planned and built using the technology of today, rather than the designs of decades ago.</p></div></div>
+      <div class="step" data-m="queues"><div class="card"><p class="lead">The connection queues holding back investment start to clear and projects get online quicker, without waiting for a new line to be built.</p></div></div>
+      <div class="step step--label" data-m="modern"><div class="eralabel eralabel--wide">This is not the old grid made bigger. It is a modern grid, fit for the age of power.</div></div>
+    </div>
+  </section>
+
+  <!-- ============ WITHIN REACH: THE INTERVENTIONS ============ -->
+  <!-- K and L share one picture: the city stays pinned (kl__stage) while K's text and then L's cards scroll over it -->
+  <div class="kl">
+    <div class="kl__stage grid-story__stage is-k">
+      <svg class="gridmap" id="gridmap" viewBox="20 40 1540 960" preserveAspectRatio="xMidYMid meet" role="img" aria-label="A modern city in isometric view, its electricity carried in glass pipes: wind, a gas plant, solar and batteries feed a main substation and control centre, which supply homes, downtown, industry, data centres, the high street, a village and a farm; each intervention stands where it acts and adds its own fittings to the pipes"></svg>
+      <div class="legend" aria-label="Map legend">
+        <span><i style="background:#13CE74"></i>Clean electricity</span>
+        <span><i style="background:#FFC400"></i>From storage</span>
+        <span><i style="background:#37A6E6"></i>High-capacity flow</span>
+        <span><i style="background:#EE7309"></i>Flexible flow (both directions)</span>
+      </div>
+      <div class="tally" aria-hidden="true"><span class="tally__n">0</span>/23 signs on the road</div>
+    </div>
+    <section id="how" class="part-intro part-intro--how kl__k">
+      <p class="eyebrow">Act 4</p>
+      <h2 class="h1">Modernising the grid</h2>
+      <div class="tbar"></div>
+      <p class="standfirst">By drawing far more from the grid that already exists. Then strengthening it. Then extending it.</p>
+      <p class="standfirst ladder__foot">A host of solutions to achieve this already exist.</p>
+    </section>
+    <section class="grid-story">
+      <div class="grid-story__steps" id="grid-steps"><!-- generated from js/data.js --></div>
+    </section>
+  </div>
+
+  <!-- ============ MATRIX ============ -->
+  <section id="matrix" class="matrix" data-steps="3">
+    <div class="matrix__stage">
+      <div class="matrix__head">
+        <p class="eyebrow">Where to start</p>
+        <h2 class="h1">Time to impact vs. cost</h2>
+        <div class="tbar"></div>
+      </div>
+      <div class="matrix__grid" id="matrix-grid"></div>
+      <div class="matrix__legend">
+        <span><b class="mk mk--optimize"></b>Optimize</span><span><b class="mk mk--reinforce"></b>Reinforce</span><span><b class="mk mk--expand"></b>Expand</span>
+        <span class="matrix__legend-note">Solid outline = sourced figure · Dashed = best-judgement estimate</span>
+      </div>
+    </div>
+    <div class="era__steps">
+      <div class="step"><div class="card"><p class="kicker">Sorting the 23 signs</p><p class="lead">Put every intervention on two axes: how fast it delivers, and how much it costs.</p></div></div>
+      <div class="step"><div class="card"><p class="lead">A pattern appears. <strong>Cheap things tend to be fast. Expensive things tend to be slow.</strong> Quick wins are available now, and the most transformative changes need the most capital.</p></div></div>
+      <div class="step"><div class="card"><p class="kicker">Two surprises</p><p class="lead"><strong>Battery storage</strong> is now a quick win, not a distant bet. <strong>Demand response</strong> is low-cost, just a little slower to scale.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ============ CLOSE ============ -->
+  <section class="close">
+    <div class="close__inner">
+      <h2 class="h1">The age of power is here.</h2>
+      <div class="tbar"></div>
+      <p class="standfirst">The only question is where it will flourish. That will be wherever the grid is ready to carry it.</p>
+    </div>
+    <footer class="footer">
+      <p class="footer__note">Draft for discussion. Figures to be sourced and linked before publication.</p>
+      <img class="footer__logo" src="../assets/ember-logo-inverted.svg" alt="Ember">
+    </footer>
+  </section>
+</main>
+
+<script src="../js/vendor/gsap.min.js"></script>
+<script src="../js/vendor/ScrollTrigger.min.js"></script>
+<script src="../js/vendor/MotionPathPlugin.min.js"></script>
+<script src="../js/icons.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/svg.js"></script>
+<script src="../js/iso.js"></script>
+<script src="../js/people.js"></script>
+<script src="../js/scenes.js"></script>
+<script src="../js/vignettes.js"></script>
+<script src="../js/acts.js"></script>
+<script src="../js/iso-scenes.js"></script>
+<script src="../js/iso-scenes2.js"></script>
+<script src="../js/iso-journey.js"></script>
+<script src="../js/iso-valley.js"></script>
+<script src="../js/iso-j.js"></script>
+<script src="../js/iso-tiles.js"></script>
+<script src="../js/iso-world.js"></script>
+<script src="../js/handdrawn.js"></script>
+<script src="../js/clean.js"></script>
+<script src="../js/gridmap.js"></script>
+<script src="../js/iso-grid.js"></script>
+<script src="../js/main.js"></script>
+<script src="../js/refmarks.js"></script> <!-- TEMP review markers: delete this line to remove -->
+</body>
+</html>

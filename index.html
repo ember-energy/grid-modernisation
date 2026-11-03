@@ -3,25 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>[v6] Building a Grid for the Age of Power (one city) | Ember</title>
+<title>Building a Grid for the Age of Power | Ember</title>
 <meta name="description" content="Every era is defined by the infrastructure it builds. A visual explainer on the grid we need for the age of power, and the interventions that will build it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/clean.css">
-<link rel="stylesheet" href="css/v6.css">
+<link rel="stylesheet" href="css/v7.css">
 <script>window.CLEAN = true;   /* the isometric, straight-edged version in the CleanFlex style */</script>
 </head>
 <body class="refs-sections-only v6">
 
-<header class="topbar">
-  <a class="topbar__logo" href="#top" aria-label="Ember home"><img src="assets/ember-logo-full-colour.svg" alt="Ember"></a>
+<header class="topbar topbar--chapters">
   <nav class="topbar__nav" aria-label="Chapters">
     <a href="#vision">Daring to build</a>
     <a href="#act2">The world moved on</a>
     <a href="#act3">A new type of grid</a>
-    <a href="#how">Modernising the grid</a>
+    <a href="#how-intro">Modernising the grid</a>
   </nav>
   <div class="topbar__progress" aria-hidden="true"><span></span></div>
 </header>
@@ -32,7 +31,7 @@
   <section class="hero">
     <svg class="hero__art" id="scene-hero" data-own="1" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
     <div class="hero__inner">
-      <div class="tbar"></div><h1>Building a grid<br>for the age of power</h1>
+      <h1>Building a grid<br>for the age of power</h1>
       <p class="standfirst">Warm homes, clean air, thriving towns and industry. The future we want runs on one network: a modern electricity grid.</p>
       <p class="hero__cue">Scroll to begin <svg class="hero__chev" viewBox="0 0 16 10" aria-hidden="true"><path d="M1 1.5l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></p>
     </div>
@@ -61,7 +60,7 @@
       <div class="step step--act" id="act3"><div class="card card--act"><div class="tbar"></div><h2 class="h2-act">A new type of grid, fit for the age of power</h2></div></div>
       <div class="step" data-m="old"><div class="card"><p class="lead">The old grid sent power one way, from a few large power stations to everyone else.</p></div></div>
       <div class="step" data-m="everywhere"><div class="card"><p class="lead">In a modern grid, generation is increasingly spread across the country.</p></div></div>
-      <div class="step" data-m="both"><div class="card"><p class="lead">Power flows now move in two ways. Homes and businesses both draw electricity from the grid and generate electricity to send back in.</p></div></div>
+      <div class="step" data-m="both"><div class="card"><p class="lead">Power flows now move in two directions. Homes and businesses both draw electricity from the grid and generate electricity to send back in.</p></div></div>
       <div class="step" data-m="resilient"><div class="card"><p class="lead">The system no longer depends on a few big plants and becomes more resilient.</p></div></div>
       <div class="step" data-m="sensors"><div class="card"><p class="lead">This is enabled by smart devices and digitalisation, which allow us to see and control what is happening on the grid.</p></div></div>
       <div class="step" data-m="smart2"><div class="card"><p class="lead">When power is plentiful and cheap, electric vehicles charge and heating or cooling turns on.</p></div></div>
@@ -81,8 +80,13 @@
     <div class="era__stage"><svg class="scene" id="scene-city4" data-look="highlight" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The same city, its modern grid in place. For each intervention the view moves to the part of the grid it acts on, and its technologies are labelled there"></svg>
     </div>
     <div class="era__steps" id="how4">
-      <div class="step step--act s4intro"><div class="card card--act"><div class="tbar"></div><h2 class="h2-act">Modernising the grid</h2>
-        <p class="lead" style="margin-top:18px">The work can begin today by optimising the grid that already exists. Then strengthening it. Then expanding it.</p></div></div>
+      <div class="step step--act s4intro" id="how-intro"><div class="card card--act"><div class="tbar"></div><h2 class="h2-act">Modernising the grid</h2>
+        <p class="lead" style="margin-top:18px">The work can begin today by optimising the grid that already exists. Then strengthening it. Then expanding it.</p></div>
+        <div class="s4over">
+          <div class="s4over__item" data-cat="optimise" data-plate="optimize"><p class="s4over__name">Optimise</p><p class="s4over__blurb">Get more out of the grid that already exists.</p></div>
+          <div class="s4over__item" data-cat="reinforce" data-plate="reinforce"><p class="s4over__name">Reinforce</p><p class="s4over__blurb">Then strengthen it where it holds the system back.</p></div>
+          <div class="s4over__item" data-cat="expand" data-plate="expand6"><p class="s4over__name">Expand</p><p class="s4over__blurb">Then build new lines and substations where they are needed.</p></div>
+        </div></div>
       <div id="story4-steps"></div>
     </div>
   </section>
@@ -105,17 +109,6 @@
     </div>
   </section>
 
-  <!-- ============ CLOSE ============ -->
-  <section class="close">
-    <div class="close__inner">
-      <div class="tbar"></div><h2 class="h1">The age of power is here.</h2>
-      <p class="standfirst">The only question is where it will flourish. That will be wherever the grid is ready to carry it.</p>
-    </div>
-    <footer class="footer">
-      <p class="footer__note">Infographic by Reynaldo Dizon, Elisabeth Cremona and Alison Candlin.<br>Illustrations and code developed with the assistance of Claude, an AI model by Anthropic, and reviewed by the authors.<br>As per Ember’s AI use policy, responsibility for the quality and accuracy of the output lies with the author.</p>
-      <img class="footer__logo" src="assets/ember-logo-inverted.svg" alt="Ember">
-    </footer>
-  </section>
 </main>
 
 <script src="js/vendor/gsap.min.js"></script>
@@ -125,8 +118,8 @@
 <script src="js/data.js"></script>
 <script src="js/svg.js"></script>
 <script src="js/icons6.js"></script>
-<script src="js/icons7.js"></script>
-<script src="js/iso.js"></script>
+<script src="js/icons8.js"></script>
+<script src="js/iso7.js"></script>
 <script src="js/people.js"></script>
 <script src="js/scenes.js"></script>
 <script src="js/vignettes.js"></script>
@@ -135,8 +128,8 @@
 <script src="js/iso-scenes2.js"></script>
 <script src="js/iso-journey.js"></script>
 <script src="js/iso-valley.js"></script>
-<script src="js/iso-onecity6.js"></script>
-<script src="js/data6.js"></script>
+<script src="js/iso-onecity7.js"></script>
+<script src="js/data7.js"></script>
 <script src="js/iso-j.js"></script>
 <script src="js/iso-tiles.js"></script>
 <script src="js/iso-world.js"></script>
@@ -144,9 +137,8 @@
 <script src="js/clean.js"></script>
 <script src="js/gridmap.js"></script>
 <script src="js/iso-grid.js"></script>
-<script src="js/main.js"></script>
-<script src="js/story6.js"></script>
-<script src="js/v6.js"></script>
-<script src="js/refmarks.js"></script> <!-- TEMP review markers: delete this line to remove -->
+<script src="js/main7.js"></script>
+<script src="js/story7.js"></script>
+<script src="js/v7.js"></script>
 </body>
 </html>

@@ -46,11 +46,14 @@ window.UNIFORM_INK = function (svg) {
       const inside = (pt, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < ((xj - xi) * (pt[1] - yi)) / (yj - yi) + xi) c = !c; } return c; };
       const hullOf = (ps) => { ps = ps.slice().sort((a, c) => a[0] - c[0] || a[1] - c[1]); const cr = (o, a, c) => (a[0] - o[0]) * (c[1] - o[1]) - (a[1] - o[1]) * (c[0] - o[0]); const lo = [], up = [];
         ps.forEach((q) => { while (lo.length > 1 && cr(lo[lo.length - 2], lo[lo.length - 1], q) <= 0) lo.pop(); lo.push(q); }); ps.slice().reverse().forEach((q) => { while (up.length > 1 && cr(up[up.length - 2], up[up.length - 1], q) <= 0) up.pop(); up.push(q); }); return lo.slice(0, -1).concat(up.slice(0, -1)); };
-      const H0 = hullOf(hull0), W = innerWidth, Hh = innerHeight, top = 70, wide = W >= 700;
+      const H0 = hullOf(hull0), W = innerWidth, Hh = innerHeight, wide = W >= 700;
+      // positions are measured on screen: offset them by where the hero is now, so a resize while scrolled down (a phone's
+      // address bar showing or hiding) places the city on the hero, not on the part of the page in view
+      const O = hero.getBoundingClientRect().top, top = O + 70;
       let best = null;
       for (let k = 3; k >= 0.3; k -= 0.02) { const w = (rb.width) * k, h = (rb.height) * k;
         for (let fx = 0; fx <= 1; fx += 0.05) for (let fy = 0; fy <= 1; fy += 0.1) {
-          const sx = W - 20 - w + 0.3 * w, sy = Hh - 10 - top - h + 0.26 * h; if (sx < 0 || sy < 0) continue; const cx = 10 + w / 2 + fx * sx, cy = top + h / 2 + fy * sy;   // the city may run a little off the right and bottom edges
+          const sx = W - 20 - w + 0.3 * w, sy = Hh - 10 - (top - O) - h + 0.26 * h; if (sx < 0 || sy < 0) continue; const cx = 10 + w / 2 + fx * sx, cy = top + h / 2 + fy * sy;   // the city may run a little off the right and bottom edges
           const poly = H0.map(([x, y]) => [cx + (x - cx0) * k, cy + (y - cy0) * k]);
           const corners = [[T.l, T.t], [T.r, T.t], [T.r, T.b], [T.l, T.b]];
           if (corners.some((c) => inside(c, poly)) || poly.some(([x, y]) => x > T.l && x < T.r && y > T.t && y < T.b)) continue;
@@ -58,7 +61,7 @@ window.UNIFORM_INK = function (svg) {
           let hit = false; for (let i = 0; i < poly.length && !hit; i++) { const a = poly[i], c = poly[(i + 1) % poly.length]; for (let t = 0; t <= 1; t += 0.05) { const x = a[0] + (c[0] - a[0]) * t, y = a[1] + (c[1] - a[1]) * t; if (x > T.l && x < T.r && y > T.t && y < T.b) { hit = true; break; } } }
           if (hit) continue; best = { k, cx, cy }; break; }
         if (best) break; }
-      if (!wide || !best) { const k = Math.min((W - 24) / rb.width, (Hh - Math.max(T.b, top) - 20) / rb.height); best = { k, cx: W / 2, cy: Math.max(T.b, top) + 10 + rb.height * k / 2 }; }
+      if (!wide || !best) { const k = Math.min((W - 24) / rb.width, (Hh - (Math.max(T.b, top) - O) - 20) / rb.height); best = { k, cx: W / 2, cy: Math.max(T.b, top) + 10 + rb.height * k / 2 }; }
       if (wide) { best.cx -= Math.min(90, W * 0.06); best.cy -= Math.min(70, Hh * 0.08); }   // nudged left and up (the city's far corners may slip under the text's empty margin)
       oc.cam.s *= best.k; oc.cam.tx = oc.cam.tx * best.k + (best.cx - m0.e) / px - (cx0 - m0.e) / px * best.k; oc.cam.ty = oc.cam.ty * best.k + (best.cy - m0.f) / px - (cy0 - m0.f) / px * best.k; oc.setCam(); };
     fit(); addEventListener("resize", fit); if (document.fonts) document.fonts.ready.then(fit);

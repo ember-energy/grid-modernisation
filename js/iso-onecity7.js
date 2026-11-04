@@ -676,7 +676,7 @@
     rise(tl, T("hub", "chg"), b(15) + 0.1, { stagger: 0.04 }); sink(tl, T("chim"), b(15) + 0.3);
     tl.fromTo(fast, Object.assign({ opacity: 0 }, along(fast, 2)), Object.assign(along(fast, 52), { duration: 0.8, ease: "power1.inOut", immediateRender: false }), b(15) + 0.1); tl.to(fast, { opacity: 1, duration: 0.06 }, b(15) + 0.1);
     tl.to(fast, { opacity: 0, duration: 0.08 }, b(15) + 0.85);
-    hl(b(15), ["hub", "chg", "homes", "homecars", "logi", "ind", "terr", "terrpv", fast], [24, 24, 0.5], { g: ["hub", "chg", "homes", "ind", "terr", "terrpv", fast] });
+    hl(b(15), ["hub", "chg", "homes", "homecars", "logi", "ind", "terr", "terrpv", "ship", "depot", fast], [26, 22, 0.46],   /* the LNG terminal and its ship too: the fuel being replaced */ { g: ["hub", "chg", "homes", "ind", "terr", "terrpv", fast] });
     // B13 (k=16) domestic wind and solar replace imports: the carrier sails, the tanks come down, solar on the quay, wind offshore
     tl.to(T("ship"), { opacity: 0, duration: 0.4 }, b(16)); /* index2: fades where it is */ sink(tl, T("depot"), b(16) + 0.25); rise(tl, T("sol3", "farmpv"), b(16) + 0.3, { stagger: 0.03 });
     hl(b(16), ["sol3", "ship", "depot"], [39, 16.5, 0.78], { g: ["sol3", "ship", "depot"] });

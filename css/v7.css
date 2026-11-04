@@ -78,7 +78,7 @@
 .v6 .era--story4.is-live .era__stage { opacity: 1; pointer-events: auto; }
 .v6 #how4 { padding-top: 100vh; }                       /* C's first card comes after B's last one has gone */
 .v6 .era--story4 .s4intro { height: 100vh; }
-.v6 .s4block:first-child { padding-top: 70vh; }          /* room between "Modernising the grid" and the Optimise box */
+.v6 .s4block:first-child { padding-top: 12vh; }          /* room between "Modernising the grid" and the Optimise box (was 70vh) */
 
 /* A: the cue is plain text with a pulsing chevron; no solar glint in the drawings */
 .v6 .hero__cue { background: none; border: 0; padding: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: var(--n4); }

@@ -163,3 +163,43 @@
 .v6 .era--story4 .s4intro { flex-direction: column; justify-content: center; align-items: flex-start; }
 /* index2: the title block a little further below the slim chapter bar */
 .v6 .hero__inner { padding-top: calc(var(--topbar) + clamp(52px, 9vh, 100px)); }
+
+/* ---------- phones (under 700px): B's city centred below the card; C as a card per intervention ---------- */
+@media (max-width: 699px) {
+  /* C: no pinned box; the city sits in the top part of the screen and each intervention's card scrolls up from below */
+  .v6 .era--story4 .gblock__hold { display: none; }
+  .v6 .era--story4 .s4block, .v6 .era--story4 .s4block:first-child { padding: 0; }
+  .v6 .era--story4 .s4block .gbeat { height: auto; padding: 0 16px 42vh; }
+  .v6 .era--story4 .s4block:first-child .gblock__hold + .gbeat { padding-top: 75vh; }
+  .v6 .era--story4 .s4intro { height: auto; min-height: 100vh; padding: calc(var(--topbar) + 16px) 16px 24px; justify-content: flex-start; }
+  .v6 .era--story4 .s4intro .card--act { width: 100%; }
+  .v6 .s4over { width: 100%; }
+  .v6 .s4m { position: relative; background: #FFFFFF; padding: 18px 18px 16px; box-shadow: 0 1px 0 rgba(25,34,56,.06); }
+  .v6 .s4m[data-cat="optimise"] { --catc: #109553; } .v6 .s4m[data-cat="reinforce"] { --catc: #2A8FCB; } .v6 .s4m[data-cat="expand"] { --catc: #B38900; }
+  .v6 .s4m { border-top: 4px solid var(--catc); }
+  .v6 .s4m__head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .v6 .s4m__plate { flex: 0 0 40px; width: 40px; height: 40px; }
+  .v6 .s4m__plate svg, .v6 .s4m__ti svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .v6 .s4m__cat { margin: 0; font-size: 14px; font-weight: 600; color: var(--catc); display: flex; flex-direction: column; line-height: 1.25; }
+  .v6 .s4m__cat span { font-size: 12px; font-weight: 400; color: var(--n3, #626E88); }
+  .v6 .s4m__title { font-size: 20px; line-height: 1.25; font-weight: 600; margin: 0 0 8px; color: #000; text-wrap: balance; }
+  .v6 .s4m__body p, .v6 .s4m__body li { font-size: 15px; line-height: 1.5; color: #192238; }
+  .v6 .s4m__body p { margin: 0 0 8px; } .v6 .s4m__body ul { margin: 6px 0 8px; padding-left: 18px; }
+  .v6 .s4m__techhead { margin: 14px 0 6px; padding-top: 12px; border-top: 1px solid #E3E7EE; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--n3, #626E88); }
+  .v6 .s4m__tech { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .v6 .s4m__tech li { display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 1.3; color: #192238; }
+  .v6 .s4m__ti { flex: 0 0 28px; width: 28px; height: 28px; }
+}
+
+/* phones: the matrix as a list, by time to impact, then by cost; every tile shows its shield and its name */
+@media (max-width: 699px) {
+  .v6 .matrix__grid.matrix4 { display: block; }
+  .v6 .matrix4 > div:first-child, .v6 .matrix4 .mx-axis--col, .v6 .matrix4 .mx-cell.mx-cell--empty { display: none; }
+  .v6 .matrix4 .mx-axis--row { display: block; background: #192238; color: #FFFFFF; font-size: 15px; font-weight: 600; padding: 9px 12px; margin: 18px 0 0; writing-mode: horizontal-tb; transform: none; }
+  .v6 .matrix4 .mx-axis--row::before { content: "Time to impact: "; font-weight: 400; color: rgba(255,255,255,.75); }
+  .v6 .matrix4 .mx-cell { display: block; min-height: 0; padding: 10px 10px 4px; background: #EDEFF6; margin-top: 4px; }
+  .v6 .matrix4 .mx-cell::before { content: attr(data-cost); display: block; font-size: 13px; font-weight: 600; color: #192238; margin: 0 0 8px; }
+  .v6 .matrix4 .mx-tile { display: flex; flex-direction: row; justify-content: flex-start; align-items: center; gap: 12px; width: auto; height: auto; flex-basis: auto; padding: 8px 10px; margin: 0 0 6px; background: #FFFFFF; text-align: left; }
+  .v6 .matrix4 .mx-tile .sign-wrap { flex: 0 0 36px; width: 36px; height: 36px; margin: 0; }
+  .v6 .matrix4 .mx-tile span { display: block; font-size: 14px; line-height: 1.3; }
+}

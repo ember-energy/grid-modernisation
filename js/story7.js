@@ -16,6 +16,10 @@
   ["tW", "tW2", "tE", "tE2", "tTrunk"].forEach((id) => svg.__oc.LINES[id] && svg.__oc.LINES[id].cond.forEach((w) => w.setAttribute("stroke-width", 1.7)));
   const OC = svg.__oc, { S, T, P, cam, setCam, camAt, HOME, items, W0, WASH } = OC;
   const callG = el("g", { class: "oc-callouts", "data-noink": "" }, svg);
+  // phones: the city in the top part of the screen, one card per intervention scrolling up from below (its technologies
+  // listed in the card, so there are no callouts on the city)
+  const PHONE = innerWidth < 700;
+  if (PHONE && window.PHONEVIEW) { PHONEVIEW(svg, 0.36); addEventListener("resize", () => { if (innerWidth < 700) PHONEVIEW(svg, 0.36); }); }
 
   // where a technology sits on the city: a point, or a point along a line's wire (on = [line, fraction])
   const local = (t) => { if (t.on && OC.LINES[t.on[0]]) { const w = OC.LINES[t.on[0]].cond[0], q = w.getPointAtLength(w.getTotalLength() * t.on[1]); return [q.x, q.y]; } return P(t.at[0], t.at[1], t.at[2] || 0); };
@@ -29,7 +33,7 @@
   function drawCallouts(iv) {
     calls = [];
     while (callG.firstChild) callG.removeChild(callG.firstChild);
-    if (!iv) return;
+    if (!iv || PHONE) return;
     const col = CATCOL[iv.cat];
     iv.tech.forEach((t, i) => {
       const g = el("g", { class: "oc-call", opacity: 0 }, callG);
@@ -171,7 +175,15 @@
       ${list.map((iv) => `<div class="s4panel" role="tabpanel" data-num="${iv.num}"><div class="s4panel__plate" data-num="${iv.num}"></div><h3 class="s4panel__title">${iv.title}</h3><div class="s4panel__body">${iv.body}</div></div>`).join("")}`;
     if (window.PLATE6) card.querySelectorAll(".s4panel__plate").forEach((d) => { const iv = list.find((i) => i.num === +d.dataset.num); d.appendChild(PLATE6.svg(SIGNCAT4[iv.cat], iconOf(iv))); });
     hold.appendChild(card); blk.appendChild(hold);
-    list.forEach((iv) => { const b = document.createElement("div"); b.className = "gbeat s4beat"; b.dataset.num = iv.num; blk.appendChild(b); beats.push({ b, iv, card }); });
+    list.forEach((iv, k) => { const b = document.createElement("div"); b.className = "gbeat s4beat"; b.dataset.num = iv.num;
+      if (PHONE) { const m = document.createElement("div"); m.className = "s4m"; m.dataset.cat = cat;
+        m.innerHTML = `<div class="s4m__head"><span class="s4m__plate"></span><p class="s4m__cat">${C.name}<span>${k + 1} of ${list.length}</span></p></div>
+          <h3 class="s4m__title">${iv.title}</h3><div class="s4m__body">${iv.body}</div>
+          <p class="s4m__techhead">Technologies</p><ul class="s4m__tech">${iv.tech.map((t) => `<li><span class="s4m__ti" data-icon="${t.icon || ""}"></span>${t.name}</li>`).join("")}</ul>`;
+        if (window.PLATE6) { m.querySelector(".s4m__plate").appendChild(PLATE6.svg(SIGNCAT4[iv.cat], iconOf(iv)));
+          m.querySelectorAll(".s4m__ti").forEach((d) => d.appendChild(PLATE6.svg(SIGNCAT4[iv.cat], d.dataset.icon || null))); }
+        b.appendChild(m); }
+      blk.appendChild(b); beats.push({ b, iv, card }); });
     card.querySelectorAll(".s4tab").forEach((t) => t.addEventListener("click", () => { const b = blk.querySelector(`.s4beat[data-num="${t.dataset.num}"]`);
       if (b) window.scrollTo({ top: b.getBoundingClientRect().top + scrollY - innerHeight * 0.45, behavior: "smooth" }); }));
     steps.appendChild(blk);
@@ -181,7 +193,8 @@
   // index2: each category's box stays pinned while its items scroll past, then scrolls away. The space after each block is
   // set from the box's real height (the tallest of its items), so a box has left the screen before the next one arrives,
   // and the last one has left before section D begins
-  const spaceBlocks = () => { steps.querySelectorAll(".s4block").forEach((blk) => { const card = blk.querySelector(".s4card"); if (!card) return;
+  const spaceBlocks = () => { if (PHONE) { steps.querySelectorAll(".s4block").forEach((blk) => { blk.style.paddingBottom = ""; }); ScrollTrigger.refresh(); return; }
+    steps.querySelectorAll(".s4block").forEach((blk) => { const card = blk.querySelector(".s4card"); if (!card) return;
       const panels = [...card.querySelectorAll(".s4panel")], was = panels.find((q) => q.classList.contains("is-on"));
       let hmax = card.offsetHeight; panels.forEach((q) => { panels.forEach((r) => r.classList.toggle("is-on", r === q)); hmax = Math.max(hmax, card.offsetHeight); });
       panels.forEach((r) => r.classList.toggle("is-on", r === was));
@@ -193,7 +206,7 @@
     ScrollTrigger.create({ trigger: tail, start: "top 45%", onEnter: () => show(null) }); }   // the whole city again, ready for D
   spaceBlocks(); addEventListener("resize", () => { clearTimeout(spaceBlocks.t); spaceBlocks.t = setTimeout(spaceBlocks, 200); });
   if (document.fonts) document.fonts.ready.then(spaceBlocks);
-  beats.forEach(({ b, iv, card }) => ScrollTrigger.create({ trigger: b, start: "top 55%", end: "bottom 55%", onToggle: (s) => { if (s.isActive) { activeCard = card; open(card, iv.num); show(iv); } } }));
+  beats.forEach(({ b, iv, card }) => ScrollTrigger.create({ trigger: b, start: PHONE ? "top 62%" : "top 55%", end: PHONE ? "bottom 62%" : "bottom 55%", onToggle: (s) => { if (s.isActive) { activeCard = card; open(card, iv.num); show(iv); } } }));
   ScrollTrigger.create({ trigger: sec.querySelector(".s4intro"), start: "top 55%", end: "bottom 55%", onToggle: (s) => { if (s.isActive) show(null); } });
   ScrollTrigger.create({ trigger: sec, start: "top bottom", end: "bottom top", onLeaveBack: () => show(null) });
 
@@ -213,8 +226,8 @@
     grid.appendChild(document.createElement("div"));
     costs.forEach((c) => { const d = document.createElement("div"); d.className = "mx-axis mx-axis--col"; d.textContent = costL[c]; grid.appendChild(d); });
     const tiles = [];
-    times.forEach((t) => { const a = document.createElement("div"); a.className = "mx-axis"; a.textContent = timeL[t]; grid.appendChild(a);
-      costs.forEach((c) => { const cell = document.createElement("div"); cell.className = "mx-cell"; grid.appendChild(cell);
+    times.forEach((t) => { const a = document.createElement("div"); a.className = "mx-axis mx-axis--row"; a.textContent = timeL[t]; grid.appendChild(a);
+      costs.forEach((c) => { const cell = document.createElement("div"); cell.className = "mx-cell" + ((MATRIX4.cells[t + "-" + c] || []).length ? "" : " mx-cell--empty"); cell.dataset.cost = costL[c]; grid.appendChild(cell);
         (MATRIX4.cells[t + "-" + c] || []).forEach((n) => { const iv = INTERVENTIONS4.find((i) => i.num === n);
           const tile = document.createElement("div"); tile.className = "mx-tile"; tile.title = iv.title; tile.dataset.num = n;
           tile.innerHTML = `<div class="sign-wrap"></div><span>${MATRIX4.short[n]}</span>`;

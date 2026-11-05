@@ -58,12 +58,22 @@
     ScrollTrigger.create({ trigger: section, start: "top top", end: "bottom bottom", scrub: 0.6, animation: anim });
   });
   // phones: show a square window onto each scene (sitting at the bottom), text cards above it
-  const FOCUS = { "scene-time": 800, "scene-journey": 1000, "scene-valley2": 1000, "scene-ga": 1000, "scene-onecity": 1010, "scene-remade": 990, "scene-power": 900, "scene-world": 900, "scene-power2": 900 };
+  const FOCUS = { "scene-city4": 1010, "scene-time": 800, "scene-journey": 1000, "scene-valley2": 1000, "scene-ga": 1000, "scene-onecity": 1010, "scene-remade": 990, "scene-power": 900, "scene-world": 900, "scene-power2": 900 };
+  // phones, the one city: the view is cut to the screen's own shape, so the whole city, at the camera's home zoom, spans
+  // the screen's width and sits centred on a chosen height (B: in the space below the text card; C: in the top part,
+  // above the cards that scroll up from below). The camera's aim point on phones is (800, 600) in the svg's units.
+  function phoneView(svg, at) {
+    const oc = svg.__oc, N = 46.5, xs = [[0, 0], [N, 0], [N, N], [0, N]].map(([x, y]) => oc.P(x, y)[0]);
+    const cityW = (Math.max(...xs) - Math.min(...xs)) * oc.HOME.s, W = cityW / 0.97, H = W * innerHeight / innerWidth;
+    svg.setAttribute("viewBox", `${(800 - W / 2).toFixed(1)} ${(600 - at * H).toFixed(1)} ${W.toFixed(1)} ${H.toFixed(1)}`);
+    svg.setAttribute("preserveAspectRatio", "xMidYMid slice"); }
+  window.PHONEVIEW = phoneView;
   function fitScenes() {
     const narrow = window.innerWidth < 700;
     Object.keys(FOCUS).forEach((id) => {
       const svg = document.getElementById(id);
       if (!svg) return;
+      if (narrow && svg.__oc && svg.__oc.PH) { phoneView(svg, id === "scene-city4" ? 0.36 : 0.64); return; }
       if (narrow) { svg.setAttribute("viewBox", `${FOCUS[id] - 450} 0 900 900`); svg.setAttribute("preserveAspectRatio", "xMidYMax meet"); }
       else { svg.setAttribute("viewBox", "0 0 1600 900"); svg.setAttribute("preserveAspectRatio", "xMidYMid slice"); }
     });

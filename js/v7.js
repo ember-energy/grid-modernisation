@@ -61,7 +61,8 @@ window.UNIFORM_INK = function (svg) {
           let hit = false; for (let i = 0; i < poly.length && !hit; i++) { const a = poly[i], c = poly[(i + 1) % poly.length]; for (let t = 0; t <= 1; t += 0.05) { const x = a[0] + (c[0] - a[0]) * t, y = a[1] + (c[1] - a[1]) * t; if (x > T.l && x < T.r && y > T.t && y < T.b) { hit = true; break; } } }
           if (hit) continue; best = { k, cx, cy }; break; }
         if (best) break; }
-      if (!wide || !best) { const k = Math.min((W - 24) / rb.width, (Hh - (Math.max(T.b, top) - O) - 20) / rb.height); best = { k, cx: W / 2, cy: Math.max(T.b, top) + 10 + rb.height * k / 2 }; }
+      if (!wide || !best) { const y0 = Math.max(T.b, top), avail = Hh - (y0 - O) - 16;   // phones: as big as the width allows (the far corners may crop a little), centred in the space under the text
+        const k = Math.min(1.12 * W / rb.width, avail / rb.height); best = { k, cx: W / 2, cy: y0 + avail / 2 }; }
       if (wide) { best.cx -= Math.min(90, W * 0.06); best.cy -= Math.min(70, Hh * 0.08); }   // nudged left and up (the city's far corners may slip under the text's empty margin)
       oc.cam.s *= best.k; oc.cam.tx = oc.cam.tx * best.k + (best.cx - m0.e) / px - (cx0 - m0.e) / px * best.k; oc.cam.ty = oc.cam.ty * best.k + (best.cy - m0.f) / px - (cy0 - m0.f) / px * best.k; oc.setCam(); };
     fit(); addEventListener("resize", fit); if (document.fonts) document.fonts.ready.then(fit);

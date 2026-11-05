@@ -739,7 +739,7 @@
     ISO.tweens.forEach((t) => t.play && t.play());
     hold(tl, 32);
     // a handle for js/story4.js, which drives a second copy of this city through the interventions
-    svg.__oc = { RECOL, gkids, FACTORY, S, T, P, cam, setCam, camAt, HOME, items, W0, WASH: MUTE, WASH2, GWASH: MUTEG, LINES, top, GREEN };
+    svg.__oc = { PH, RECOL, gkids, FACTORY, S, T, P, cam, setCam, camAt, HOME, items, W0, WASH: MUTE, WASH2, GWASH: MUTEG, LINES, top, GREEN };
     return tl;
   }
 

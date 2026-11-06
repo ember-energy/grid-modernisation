@@ -203,3 +203,6 @@
   .v6 .matrix4 .mx-tile .sign-wrap { flex: 0 0 36px; width: 36px; height: 36px; margin: 0; }
   .v6 .matrix4 .mx-tile span { display: block; font-size: 14px; line-height: 1.3; }
 }
+
+/* performance: a city off screen holds still (js/v7.js sets is-off) */
+svg.is-off, svg.is-off * { animation-play-state: paused !important; }

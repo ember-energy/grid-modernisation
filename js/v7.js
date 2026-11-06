@@ -76,7 +76,11 @@ window.UNIFORM_INK = function (svg) {
     if (first && last) ScrollTrigger.create({ trigger: first, endTrigger: last, start: "top 70%", end: "bottom 30%", onToggle: (s) => key.classList.toggle("is-on", s.isActive) }); }
   // the turbines spin with GSAP, not CSS: pause each one while its drawing is held still
   setInterval(() => (window.ISO && ISO.tweens || []).forEach((tw) => { const n = tw.vars && tw.vars.data; if (!n || !n.closest) return;
-    const still = !!n.closest('[data-still="1"]'); if (still && !tw.paused()) tw.pause(); else if (!still && tw.paused()) tw.play(); }), 250);
+    const still = !!n.closest('[data-still="1"], svg.is-off'); if (still && !tw.paused()) tw.pause(); else if (!still && tw.paused()) tw.play(); }), 250);
+  // performance: a city that is off screen holds still (its CSS animations, turbines and traffic pause), so only the copy
+  // of the city in view is animated; nothing changes on screen
+  if ("IntersectionObserver" in window) { const io = new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle("is-off", !e.isIntersecting)), { rootMargin: "100px 0px" });
+    ["scene-hero", "scene-onecity", "scene-city4"].forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); }); }
   // B to C: one city. Section C's stage sits under the end of B (css/v6.css) but stays invisible until it reaches the top
   // of the screen, at the very moment B's identical, finished city starts to scroll away underneath it
   const c4 = document.querySelector(".era--story4");

@@ -461,14 +461,18 @@
     // pauses and every vehicle stops where it is; as soon as any of them is in focus, all of them drive again. (Stopping
     // only some would let moving vehicles drive through stopped ones at the junctions.)
     const TRAFFIC = { t: 0 }, TRAFFIC_S = 26, trafficTw = gsap.to(TRAFFIC, { t: 1, duration: TRAFFIC_S, repeat: -1, ease: "none" });
+    // the vehicles (their own tweens) stop and start with the clock; all of it also stops while this city is off screen
+    // (js/v7.js marks the svg "is-off"), so the copies of the city that cannot be seen cost nothing
+    const VTW = [];
     setInterval(() => { const ns = (lanesX || []).concat(S.set("carsY")); if (!ns.length) return;
-      const live = ns.some((n) => !n.closest('[data-still="1"]')); if (live && trafficTw.paused()) trafficTw.play(); else if (!live && !trafficTw.paused()) trafficTw.pause(); }, 250);
+      const live = !svg.classList.contains("is-off") && ns.some((n) => !n.closest('[data-still="1"]'));
+      if (live && trafficTw.paused()) { trafficTw.play(); VTW.forEach((t) => t.play()); } else if (!live && !trafficTw.paused()) { trafficTw.pause(); VTW.forEach((t) => t.pause()); } }, 250);
     // index2: a vehicle is fully visible only while all of it is on the land; it fades out over its last stretch before
     // the edge (and in over its first), so nothing hangs over the edge of the city
     const VLEN = { car: 1.4, bus: 2.8, truck: 2.2, tram: 3.25 }, FADE = 1.6;
     const edgeOp = (d, kind) => Math.max(0, Math.min(1, d / FADE, (N - d - (VLEN[kind] || 1.4)) / FADE)).toFixed(2);
     const drive = (lane, y, list, dir) => list.forEach(([col, phase, kind]) => { const c = el("g", null, lane); vehicle(c, kind, 0, y, col, "x", dir < 0); const o = { p: 0 }, L = N + 5;
-      const tw = gsap.to(o, { p: 1, duration: TRAFFIC_S, repeat: -1, ease: "none", data: c, onUpdate: () => { const q = (phase + TRAFFIC.t) % 1, s0 = dir < 0 ? N + 2 - q * L : -3 + q * L, d = along(null, s0);
+      const tw = VTW[VTW.length] = gsap.to(o, { p: 1, duration: TRAFFIC_S, repeat: -1, ease: "none", data: c, onUpdate: () => { const q = (phase + TRAFFIC.t) % 1, s0 = dir < 0 ? N + 2 - q * L : -3 + q * L, d = along(null, s0);
         c.setAttribute("transform", `translate(${d.x.toFixed(1)} ${d.y.toFixed(1)})`); c.setAttribute("opacity", edgeOp(s0, kind)); } }); });
     S.lane(RY + 0.45, (g) => { train = convoy(g, N, VK.steamTrain(RY + 0.45, 3)); fast = el("g", { opacity: 0 }, g); K.train(fast, 0, RY + 0.42, 3, { stripe: GREEN }); });
     S.lane(RD[2][0] + 0.45, (g0) => { boatG = el("g", { opacity: 0 }, g0); boat = convoy(boatG, N, [[0, (g) => { const y = RD[2][0] + 0.45;
@@ -486,7 +490,7 @@
     const GYL = [[RD[0], [[1, "#E0785A", 0.028], [-1, "#4AB4D6", 0.836, "bus"]]], [RD[1], [[1, "#FFCD00", 0.802], [-1, "#F1F2F4", 0.762]]], [RD[2], [[1, "#F1F2F4", 0.035, "truck"], [-1, "#A6D84A", 0.381]]]];
     GYL.forEach(([[a, c], list], ri) => list.forEach(([dir, col, phase, kind], vi) => { const id = `oc-vy-${UIDY}-${ri}-${vi}`, x = dir > 0 ? a + 0.12 : c - 0.74;
       const g = el("g", { id }, protoHome); vehicle(g, kind, x, 0, col, "y", dir < 0); protosY.push([ri, id]); const o = { p: 0 }, L = N + 5;
-      const tw = gsap.to(o, { p: 1, duration: TRAFFIC_S, repeat: -1, ease: "none", data: g, onUpdate: () => { const q = (phase + TRAFFIC.t) % 1, d = dir > 0 ? -3 + q * L : N + 2 - q * L, u = P(0, d), z = P(0, 0);
+      const tw = VTW[VTW.length] = gsap.to(o, { p: 1, duration: TRAFFIC_S, repeat: -1, ease: "none", data: g, onUpdate: () => { const q = (phase + TRAFFIC.t) % 1, d = dir > 0 ? -3 + q * L : N + 2 - q * L, u = P(0, d), z = P(0, 0);
         g.setAttribute("transform", `translate(${(u[0] - z[0]).toFixed(1)} ${(u[1] - z[1]).toFixed(1)})`); g.setAttribute("opacity", edgeOp(d, kind)); } }); }));
     // used only by the interventions story (index4, js/story4.js): an HVDC converter station on the quay and its subsea
     // interconnector cable out across the sea to a neighbouring country beyond the tile's edge
